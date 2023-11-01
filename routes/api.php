@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::controller(AgremiadosController::class)->group(function (){
-    //crear un agreamiado
     Route::post('crearAgremiado', 'newAgremiado');
     Route::patch('actualizarAgremiado/{id}', 'updateAgremiado');
     Route::get('obtenerAgremiados', 'getAgremiado');
@@ -31,7 +30,6 @@ Route::controller(AgremiadosController::class)->group(function (){
 });
 
 Route::controller(SolicitudesController::class)->group(function () {
-    //Route::patch('nuevasolicitud', 'newSolicitud');
     Route::get('obtenerSolicitud', 'getSolicitud');
     Route::delete('eliminarsolicitud/{id}', 'deleteSolicitudById');
 });
