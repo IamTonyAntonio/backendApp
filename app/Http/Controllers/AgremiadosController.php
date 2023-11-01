@@ -12,7 +12,6 @@ class AgremiadosController extends Controller
 {
     public function newAgremiado(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'a_paterno' => 'required',
             'a_materno' => 'required',
@@ -64,7 +63,6 @@ class AgremiadosController extends Controller
         }
 
         $agremiado->update($request->all());
-
         return response()->json(['message' => 'Agremiado actualizado con éxito']);
     }
 

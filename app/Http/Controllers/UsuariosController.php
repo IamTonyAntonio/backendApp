@@ -31,7 +31,6 @@ class UsuariosController extends Controller
         return response($usuario, 200);
     }
 
-
     public function starlogin(Request $request){
         $credentials = $request->only('NUE', 'password');
 
