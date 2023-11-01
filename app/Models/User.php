@@ -11,11 +11,12 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    protected $table = 'usuarios';
     use HasApiTokens, HasFactory, Notifiable;
 
     //FUNCION DE LA RELACION DE TABLA ROLES CON USERS
     public function roles(){
-        return $this->belongsTo(Role::class, 'id_rol');
+        return $this->belongsTo(Role::class);
     }
 
     /**
@@ -24,9 +25,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password'
+        'NUE',
+        'password',
+        'id_rol'
     ];
 
     /**

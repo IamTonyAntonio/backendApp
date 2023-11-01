@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
+            $table->string('NUE')->unique();
+            $table->string('ruta_archivo');
+            $table->foreign('NUE')->references('NUE')->on('agremiados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
