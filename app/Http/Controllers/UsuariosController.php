@@ -10,16 +10,24 @@ use App\Models\User;
 
 class UsuariosController extends Controller
 {
-    public function loginUsuario(Request $request){
+    public function loginUsuario(Request $request)
+    {
         $credentials = $request->only(['NUE', 'password']);
 
-        if(!Auth::attempt($credentials)){
-            return response()->json(['message'=>'Credenciales incorrectas'], 401);
-       }
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        }
 
-        $User = $request->User();
-        $token = $User->createToken('auth_token')->plainTextToken;
-        return response()->json(['token'=>$token, 'Usuario'=>$User], 200);
+        $user = $request->user();
+        $id_rol = $user->id_rol;
+
+        if ($id_rol == 1) {
+            $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
+        } else {
+            $token = $user->createToken('auth_token', ['agremiado'])->plainTextToken;
+        }
+
+        return response()->json(['token' => $token, 'Usuario' => $user], 200);
     }
 
     public function getUsuarios(){
