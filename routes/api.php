@@ -30,8 +30,10 @@ Route::controller(AgremiadosController::class)->group(function (){
 });
 
 Route::controller(SolicitudesController::class)->group(function () {
-    Route::get('obtenerSolicitud', 'getSolicitud');
-    Route::delete('eliminarsolicitud/{id}', 'deleteSolicitudById');
+    Route::get('obtenerSolicitudes', 'getSolicitud');
+    Route::post('nuevaSolicitud', 'newSolicitud');
+    Route::patch('actualizarSolicitud/{id}', 'updateSolicitud');
+    Route::delete('eliminarSolicitud/{id}', 'deleteSolicitudById');
 });
 
 Route::controller(UsuariosController::class)->group(function () {

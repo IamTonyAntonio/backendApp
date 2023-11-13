@@ -10,15 +10,24 @@ use App\Models\User;
 
 class UsuariosController extends Controller
 {
-    public function loginUsuario(Request $request){
-            $credentials = $request->only('NUE', 'password');
+    public function loginUsuario(Request $request)
+    {
+        $credentials = $request->only(['NUE', 'password']);
 
-            if(Auth::attempt($credentials)){
-                $User = Auth::User();
-                return response()->json($User, 200);
-            }else {
-                return response()->json(['message'=>'credencial incorrecta'], 401);
-            }
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        }
+
+        $user = $request->user();
+        $id_rol = $user->id_rol;
+
+        if ($id_rol == 1) {
+            $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
+        } else {
+            $token = $user->createToken('auth_token', ['agremiado'])->plainTextToken;
+        }
+
+        return response()->json(['token' => $token, 'Usuario' => $user], 200);
     }
 
     public function getUsuarios(){
@@ -29,16 +38,5 @@ class UsuariosController extends Controller
     public function newUsuario(Request $request){
         $usuario = User::create($req->all());
         return response($usuario, 200);
-    }
-
-    public function starlogin(Request $request){
-        $credentials = $request->only('NUE', 'password');
-
-        if(Auth::attempt($credentials)){
-            $usuario = Auth::usuario();
-            return response()->json($usuario, 200);
-        }else {
-            return response()->json(['message'=>'credencial incorrecta'], 401);
-        }
     }
 }
